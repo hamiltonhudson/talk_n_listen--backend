@@ -29,6 +29,10 @@ module TalkNListenBackend
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
+
+    #our Rails app will be able to use the cookie-based session store
+    config.middleware.use ActionDispatch::Cookies
+
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
   end
