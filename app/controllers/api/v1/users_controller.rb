@@ -1,48 +1,69 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :auth, only: [:index, :show]
 
   def index
-    @users = User.all
-    render json: @users, status: :ok
+    render json: User.all
   end
 
   def show
-    @user = User.find(params[:id])
-    render json: @user
+    @user = User.find_by(id: params[:id])
   end
 
   def create
-    @user = User.create(user_params)
-    if @user.valid?
-      @user.save
-      render json: @user, status: :ok
+    @user = User.new
+    @user.username = params[:username]
+    @user.password = params[:password]
+    if (@user.save)
+      render json: {
+        username: @user.username,
+        id: @user.id
+      }
     else
-      render :json, @user.errors.full_messages, status: :unprocessable_entity
+      render json: {
+        errors: @user.errors.full_messages
+      }, status: :unprocessable_entity
     end
   end
 
-  def update
-    find_user
-    if @user.valid?
-      @user.save
-      render :json, status: :ok
-    else
-      render :json, @user.errors.full_messages
+  def users_chats
+    @user = User.find_by(id: params[:user_id])
+    render json: @user.user_chats
+  end
+
+  # def update
+  #   find_user
+  #   if @user.valid?
+  #     @user.save
+  #     render :json, status: :ok
+  #   else
+  #     render :json, @user.errors.full_messages
+  #   end
+  # end
+
+  # def destroy
+  #   find_user
+  #   @user.destroy
+  # end
+
+  def auth
+    if !valid_token?
+      render json: {
+        message: "You wrong!"
+      }, status: :unauthorized
     end
   end
-
-  def destroy
-    find_user
-    @user.destroy
-  end
-
 
   private
-    def find_user
-      @user = User.find(params[:id])
-    end
+    # def find_user
+    #   @user = User.find(params[:id])
+    # end
 
-    def user_params
-      params.require(:user).permit(:name, :email, :username, :password)
-    end
+    # def user_params
+    #   params.require(:user).permit(:name, :email, :password, :username)
+    # end
+
+    # def user_params
+    #   params.require(:user).permit(:username, :password)
+    # end
 
 end
