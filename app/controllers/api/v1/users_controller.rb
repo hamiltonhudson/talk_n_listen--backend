@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :auth, only: [:index, :show]
+  before_action :requires_login, only: [:index, :show, :users_chats]
+  # before_action :is_admin, only: [:index]
 
   def index
     render json: User.all
@@ -7,6 +8,7 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
+    render json: @user
   end
 
   def create
@@ -16,7 +18,8 @@ class Api::V1::UsersController < ApplicationController
     if (@user.save)
       render json: {
         username: @user.username,
-        id: @user.id
+        id: @user.id,
+        token: get_token(payload(@user.username, @user.id))
       }
     else
       render json: {
@@ -27,23 +30,15 @@ class Api::V1::UsersController < ApplicationController
 
   def users_chats
     @user = User.find_by(id: params[:user_id])
-    render json: @user.user_chats
+    # render json: @user.user_chats
+    # @user_chats = @user.user_chats.map { |user_chat| user_chat.chat.message }
+
+    # @user_chat_msgs = @user.user_chat_msgs
+    # render json: @user_chat_msgs
+
+    @user_chat_instances = @user.user_chat_instances
+    render json: @user_chat_instances
   end
-
-  # def update
-  #   find_user
-  #   if @user.valid?
-  #     @user.save
-  #     render :json, status: :ok
-  #   else
-  #     render :json, @user.errors.full_messages
-  #   end
-  # end
-
-  # def destroy
-  #   find_user
-  #   @user.destroy
-  # end
 
   def auth
     if !valid_token?
@@ -52,18 +47,5 @@ class Api::V1::UsersController < ApplicationController
       }, status: :unauthorized
     end
   end
-
-  private
-    # def find_user
-    #   @user = User.find(params[:id])
-    # end
-
-    # def user_params
-    #   params.require(:user).permit(:name, :email, :password, :username)
-    # end
-
-    # def user_params
-    #   params.require(:user).permit(:username, :password)
-    # end
 
 end
