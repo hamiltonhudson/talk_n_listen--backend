@@ -1,8 +1,6 @@
 class UserChatSerializer < ActiveModel::Serializer
-  attributes :id
-  # attributes :id, :user, :chat
-  has_one :user
-  # has_one :chat
-  # has_one :chat, serializer: ChatSerializer
-  belongs_to :chat, serializer: ChatSerializer
+  attributes :id, :chat_id, :user_id, :user, :message_text, :created_at
+  # belongs_to :chat, serializer: UserChatSerializer
+  # belongs_to :user, serializer: UserChatSerializer
+
 end

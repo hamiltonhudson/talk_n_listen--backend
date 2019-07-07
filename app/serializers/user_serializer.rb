@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
-  # attributes :id, :name, :email, :password, :username
-  attributes :id, :username
+  attributes :id, :username, :user_chats
   has_many :user_chats
   has_many :chats, through: :user_chats
+  
 end

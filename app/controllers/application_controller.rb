@@ -29,12 +29,8 @@ class ApplicationController < ActionController::API
     end
   end
 
-  # def payload
-  #   {name: params["username"], id: @user.id}
-  # end
-
-  def payload(name, id)
-    { name: name, id: id }
+  def payload(name, userchats, id)
+    { name: name, userchats: userchats, id: id }
   end
 
   def get_token(payload)
@@ -49,10 +45,6 @@ class ApplicationController < ActionController::API
     end
     decoded
   end
-
-  # def is_admin
-  #   decoded_token[0]["id"]
-  # end
 
 
 end

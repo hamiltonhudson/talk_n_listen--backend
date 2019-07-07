@@ -12,7 +12,7 @@ gem 'puma', '~> 3.11'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
@@ -29,7 +29,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 
 #Use AMS to specify the shape of our JSON response
-# gem 'active_model_serializers', '~> 0.10.0'
+gem 'active_model_serializers', '~> 0.10.0'
 
 gem "jwt", "~> 2.1"
 # gem "dotenv-rails", "~> 2.4"

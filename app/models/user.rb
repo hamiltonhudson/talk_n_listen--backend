@@ -5,18 +5,18 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 
-  def user_chat_msgs
-    self.user_chats.all.map do |user_chat|
-     user_chat.chat.message
-    end
-    # return user_chat.chat.message
-  end
-
-  def user_chat_instances
-    self.user_chats.all.map do |user_chat|
-     user_chat.chat
-    end
-    # return user_chat.chat.message
-  end
+  # def user_chat_msgs
+  #   self.user_chats.all.map do |user_chat|
+  #    user_chat.chat.message
+  #   end
+  #   # return user_chat.chat.message
+  # end
+  #
+  # def user_chat_instances
+  #   self.user_chats.all.map do |user_chat|
+  #    user_chat.chat
+  #   end
+  #   # return user_chat.chat.message
+  # end
 
 end

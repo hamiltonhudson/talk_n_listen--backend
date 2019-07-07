@@ -10,3 +10,8 @@
 require 'dotenv'
 
 DatabaseCleaner.clean_with(:truncation)
+
+
+User.create!(username: "theeny", password: "beans")
+User.create!(username: "jonvg", password: "darkness")
+User.create!(username: "hammer", password: "howdy")

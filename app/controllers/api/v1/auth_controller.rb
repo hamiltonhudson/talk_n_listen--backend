@@ -6,8 +6,8 @@ class Api::V1::AuthController < ApplicationController
       render json: {
         username: @user.username,
         id: @user.id,
-        # token: get_token(payload(params["username"], @user.id))
-        token: get_token(payload(@user.username, @user.id))
+        user_chats: @user.user_chats,
+        token: get_token(payload(@user.username, @user.user_chats, @user.id))
       }
     else
       render json: {
